@@ -24,10 +24,6 @@ const Cart = () => {
     dispatch({ type: "calculation" });
   };
 
-  // if (cartItems.length === 0) {
-  //   window.location.href = "/";
-  // }
-
   return (
     <div className="cartList">
       <div className="max-w-80">
