@@ -1,6 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { MdDeleteForever } from "react-icons/md";
+import toast from "react-hot-toast";
 
 const Cart = () => {
   const { cartItems, subTotal, Shipping, tax, total } = useSelector(
@@ -12,6 +14,7 @@ const Cart = () => {
   const deleteHandler = (id) => {
     dispatch({ type: "removeFromCart", payload: id });
     dispatch({ type: "calculation" });
+    toast.error("Item Removed");
   };
 
   const incrementHandler = (id) => {
@@ -23,6 +26,9 @@ const Cart = () => {
     dispatch({ type: "decrementQty", payload: id });
     dispatch({ type: "calculation" });
   };
+
+  if (cartItems == 1) {
+  }
 
   return (
     <div className="cartList">
@@ -51,12 +57,43 @@ const Cart = () => {
           ))
         )}
       </div>
+
       <aside>
         <h5>Sub Total: ${subTotal}</h5>
         <h5>Shipping: ${Shipping}</h5>
         <h5>Tax: ${tax}</h5>
         <h3>Total: ${total}</h3>
       </aside>
+
+      {cartItems == 0 ? null : (
+        <div>
+          <table className="for-sm-device">
+            <tbody>
+              <tr>
+                <th width="50%">Sub Total:</th>
+                <td width="50%">${subTotal}</td>
+              </tr>
+              <tr>
+                <th>Shipping:</th>
+                <td>${Shipping}</td>
+              </tr>
+              <tr>
+                <th>Tax:</th>
+                <td>${tax}</td>
+              </tr>
+              <tr>
+                <th>Total:</th>
+                <td>${total}</td>
+              </tr>
+              <tr>
+                <th colSpan={"2"} width="100%">
+                  NOTE: asdf asf asdf sdf asd aef asdf
+                </th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };
@@ -75,7 +112,7 @@ const Cartdata = ({
   return (
     <div className="cart mt-3">
       <div>
-        <img src={imgSrc} alt="" />
+        <img src={imgSrc} alt={"Image 1"} />
       </div>
       <div>
         <h4>{title}</h4>
@@ -87,7 +124,15 @@ const Cartdata = ({
       <div className="increSection">
         <button onClick={() => incrementHandler(id)}>+</button>
         <p>{qty}</p>
-        <button onClick={() => decrementHandler(id)}>-</button>
+        {qty > 1 ? (
+          <button onClick={() => decrementHandler(id)}>
+            {qty === 1 ? <MdDeleteForever className="deleteBtn" /> : "-"}
+          </button>
+        ) : (
+          <button className="deleteBtn" onClick={() => decrementHandler(id)}>
+            {qty === 1 ? <MdDeleteForever /> : "-"}
+          </button>
+        )}
       </div>
       <div
         style={{
@@ -95,7 +140,9 @@ const Cartdata = ({
           placeContent: "center",
         }}
       >
-        <button onClick={() => deleteHandler(id)}>Delete</button>
+        <button className="deleteBtn" onClick={() => deleteHandler(id)}>
+          Delete
+        </button>
       </div>
     </div>
   );

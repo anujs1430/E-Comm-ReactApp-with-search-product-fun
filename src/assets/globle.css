@@ -96,12 +96,29 @@ main {
 .priceDesc p {
     max-height: 110px;
     overflow: hidden;
+    max-width: 120px;
 }
 
 .increSection {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.increSection button {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+}
+
+.deleteBtn {
+    background-color: #bb2124 !important;
+}
+
+.increSection button svg {
+    font-size: 20px;
 }
 
 .increSection p {
@@ -183,4 +200,61 @@ aside {
     cursor: pointer;
     background: hsla(11, 100%, 42.2%, 1);
     color: #fff;
+}
+
+footer {
+    /* position: ;
+    bottom: 0; */
+    /* padding-top: 3rem; */
+    margin-top: 3rem;
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+    background-color: #000;
+    color: #fff;
+}
+
+.for-sm-device {
+    display: none;
+}
+
+@media only screen and (max-width:500px) {
+    aside {
+        display: none;
+    }
+
+    .max-w-80 {
+        max-width: 100%;
+    }
+
+    .cart {
+        width: 100%;
+    }
+
+    .cart {
+        grid-template-columns: 4fr 3fr 3fr;
+    }
+
+    .for-sm-device {
+        display: block;
+        /* margin: 3rem; */
+        margin-top: 3rem;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
 }

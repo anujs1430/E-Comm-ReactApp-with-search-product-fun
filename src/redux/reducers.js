@@ -1,4 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 
 const initialState = {
   cartItems: [],
@@ -28,13 +29,30 @@ export const cartReducer = createReducer(initialState, (builder) => {
     state.cartItems = state.cartItems.filter((item) => item.id !== idToRemove);
   });
 
-  builder.addCase("decrementQty", (state, action) => {
-    const item = state.cartItems.find((i) => i.id == action.payload);
+  // builder.addCase("decrementQty", (state, action) => {
+  //   const item = state.cartItems.find((i) => i.id == action.payload);
 
-    if (item.qty > 1) {
-      state.cartItems.forEach((i) => {
-        if (i.id === item.id) i.qty -= 1;
-      });
+  //   if (item.qty > 1) {
+  //     state.cartItems.forEach((i) => {
+  //       if (i.id === item.id) i.qty -= 1;
+  //     });
+  //   }
+
+  // });
+
+  builder.addCase("decrementQty", (state, action) => {
+    const itemId = action.payload;
+    const itemIndex = state.cartItems.findIndex((item) => item.id === itemId);
+
+    if (itemIndex !== -1) {
+      if (state.cartItems[itemIndex].qty === 1) {
+        // Remove the item from the cart if its quantity is 1
+        state.cartItems.splice(itemIndex, 1);
+        toast.error("Item Removed");
+      } else {
+        // Decrement the quantity of the item
+        state.cartItems[itemIndex].qty -= 1;
+      }
     }
   });
 
